@@ -3,8 +3,8 @@ import time
 from bs4 import BeautifulSoup
 
 # ===== CONFIGURARE =====
-TELEGRAM_TOKEN = "PUNE_TOKEN_DE_LA_BOTFATHER_AICI"
-CHAT_ID = "PUNE_ID_UL_TAU_TELEGRAM_AICI"
+TELEGRAM_TOKEN = "8426859153:AAHKp2b5KqjFdpZV0TnFsk62cqU3pmzX6GQ"
+CHAT_ID = "5982074126"
 
 # Link-uri produs (trebuie să fie exact configurația dorită)
 URLS = {
