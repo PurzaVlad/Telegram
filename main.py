@@ -13,11 +13,15 @@ def get_price():
     }
     try:
         r = requests.get(URL, headers=headers, timeout=10)
-        # Caută preț în formatul exact: **11.099,99 lei (fără PRP: înainte)
-        pattern = r"(?<!PRP:\s)(\d{1,3}(?:\.\d{3})*,\d{2})\s*lei"
-        match = re.search(pattern, r.text)
-        if match:
-            return match.group(1)
+        # Găsește toate prețurile și exclude PRP
+        all_prices = re.findall(r'(\d{1,3}(?:\.\d{3})*,\d{2})\s*lei', r.text)
+        text_parts = r.text.split('PRP:')
+        
+        for price in all_prices:
+            # Verifică dacă prețul nu e precedat de "PRP:"
+            price_context = r.text[r.text.find(price) - 50:r.text.find(price)]
+            if 'PRP:' not in price_context[-20:]:
+                return price
         return None
     except:
         return None
