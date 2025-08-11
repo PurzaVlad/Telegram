@@ -20,7 +20,7 @@ def get_price(url):
         # caută orice text de tip "lei"
         text = soup.get_text()
         import re
-        match = re.search(r"(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s*lei", text)
+        match = re.search(r"(\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\s*(?:lei|RON)\b", text)
         if match:
             price = match.group(1).replace(".", "").replace(",", ".")
             return float(price)
