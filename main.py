@@ -13,17 +13,11 @@ def get_price():
     }
     try:
         r = requests.get(URL, headers=headers, timeout=10)
-        # Încearcă mai multe pattern-uri
-        patterns = [
-            r"(\d{1,3}(?:\.\d{3})*,\d{2})\s*lei",
-            r"(\d{1,3}(?:\.\d{3})*)\s*lei",
-            r'"price"[^>]*>(\d{1,3}(?:\.\d{3})*)',
-            r'class="[^"]*price[^"]*"[^>]*>(\d{1,3}(?:\.\d{3})*)'
-        ]
-        for pattern in patterns:
-            match = re.search(pattern, r.text, re.IGNORECASE)
-            if match:
-                return match.group(1)
+        # Caută preț în formatul exact: **11.099,99 lei (fără PRP: înainte)
+        pattern = r"(?<!PRP:\s)(\d{1,3}(?:\.\d{3})*,\d{2})\s*lei"
+        match = re.search(pattern, r.text)
+        if match:
+            return match.group(1)
         return None
     except:
         return None
