@@ -8,12 +8,8 @@ CHAT_ID = "5982074126"
 
 # Link-uri produs (trebuie să fie exact configurația dorită)
 URLS = {
-    "eMAG": "https://www.emag.ro/laptop-macbook-pro-14-procesor-apple-m4-pro-cu-12-nuclee-gpu-cu-16-nuclee-24-gb-512-gb-ssd-argintiu-mx2e3mg-a/pd/D2ZMLRYBM/",
-    "Altex": "https://altex.ro/laptop-apple-macbook-pro-14-inch-2024-m4-pro-12-core-cpu-16-core-gpu-24gb-512gb-ssd-macos-argintiu/cpd/LAPMX2E3RO/",
-    "Flanco": "https://www.flanco.ro/laptop-apple-macbook-pro-14-inch-m4-pro-12-core-cpu-16-core-gpu-24gb-512gb-ssd-macos-argintiu.html",
-    "iStyle": "https://www.istyle.ro/macbook-pro-14-inch-apple-m4-pro-cu-12-nuclee-cpu-si-16-nuclee-gpu-24gb-512gb-ssd-argintiu.html"
+    "Altex": "https://altex.ro/laptop-apple-macbook-pro-14-mx2h3ro-a-apple-m4-pro-14-2-liquid-retina-xdr-24gb-ssd-512gb-16-core-gpu-macos-sequoia-space-black-tastatura-layout-int/cpd/LAPMX2H3ROA/",
 }
-
 # ===== FUNCTII =====
 def get_price(url):
     try:
