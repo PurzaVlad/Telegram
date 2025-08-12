@@ -1,6 +1,6 @@
 import requests
-import re
 import time
+from bs4 import BeautifulSoup
 
 # ===== CONFIGURARE =====
 TELEGRAM_TOKEN = "8426859153:AAHKp2b5KqjFdpZV0TnFsk62cqU3pmzX6GQ"
@@ -13,17 +13,23 @@ def get_price():
     }
     try:
         r = requests.get(URL, headers=headers, timeout=10)
-        # Găsește toate prețurile și exclude PRP
-        all_prices = re.findall(r'(\d{1,3}(?:\.\d{3})*,\d{2})\s*lei', r.text)
-        text_parts = r.text.split('PRP:')
-        
-        for price in all_prices:
-            # Verifică dacă prețul nu e precedat de "PRP:"
-            price_context = r.text[r.text.find(price) - 50:r.text.find(price)]
-            if 'PRP:' not in price_context[-20:]:
-                return price
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        # Caută prețul principal (evitând PRP)
+        price_containers = soup.find_all("div", class_="Price")
+        for container in price_containers:
+            label = container.find_previous_sibling("div")
+            if not (label and "PRP" in label.text):
+                int_part = container.find("span", class_="Price-int")
+                dec_part = container.find("sup", class_="Price-decimal")
+                if int_part and dec_part:
+                    return f"{int_part.text.strip()},{dec_part.text.strip()} lei"
+
         return None
-    except:
+    except Exception as e:
+        print(f"Eroare: {e}")
         return None
 
 def send_telegram_message(text):
@@ -34,7 +40,7 @@ def send_telegram_message(text):
 while True:
     price = get_price()
     if price:
-        send_telegram_message(f"💻 Preț Macbook: {price} lei")
+        send_telegram_message(f"💻 Preț Macbook: {price}")
     else:
         send_telegram_message("⚠️ Nu pot obține prețul")
     
