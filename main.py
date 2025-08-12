@@ -16,9 +16,9 @@ def get_price():
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-
+        print(soup)
         # Caută prețul principal (evitând PRP)
-        price_containers = soup.find_all("div", class_="Price")
+        price_containers = soup.find_all("div")
         for container in price_containers:
             label = container.find_previous_sibling("div")
             if not (label and "PRP" in label.text):
